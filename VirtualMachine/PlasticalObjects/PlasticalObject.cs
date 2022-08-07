@@ -1,4 +1,4 @@
-namespace VirtualMachine;
+namespace VirtualMachine.PlasticalObjects;
 public abstract class PlasticalObject
 {
     public abstract bool AsBool();

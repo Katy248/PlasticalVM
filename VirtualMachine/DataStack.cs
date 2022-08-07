@@ -1,6 +1,8 @@
+using System.Collections;
+
 namespace VirtualMachine;
 
-public class DataStack<T> where T : class
+public class DataStack<T> : IEnumerable<T>, IEnumerable where T : class
 {
     public DataStack(T standartObject, int capacity = 10)
     {
@@ -59,4 +61,7 @@ public class DataStack<T> where T : class
         T obj = Stack[index];
         Stack.Insert(0, obj);
     }
+
+    IEnumerator IEnumerable.GetEnumerator() => Stack.GetEnumerator();
+    public IEnumerator<T> GetEnumerator() => Stack.GetEnumerator();
 }
