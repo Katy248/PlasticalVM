@@ -55,7 +55,7 @@ public class DataStack<T> : IEnumerable<T>, IEnumerable where T : class
         Stack.RemoveAt(index);
         Stack.Insert(0, obj);
     }
-    public void PeekToTop(int index)
+    public void Dup(int index)
     {
         if (index < 0 || index >= Stack.Count) return;
         T obj = Stack[index];
