@@ -7,15 +7,15 @@ public class PlasticalEnumeration : PlasticalObject
     {
         EnumerationStack.Push(obj);
     }
-    public PlasticalEnumeration(IEnumerable<PlasticalObject> objs)
+    public PlasticalEnumeration(IEnumerable<PlasticalObject> objs, bool isReversed = false)
     {
-        objs = objs.Reverse();
+        if (!isReversed) objs = objs.Reverse();
         foreach (var obj in objs)
         {
             EnumerationStack.Push(obj);
         }
     }
-    private DataStack<PlasticalObject> EnumerationStack = new DataStack<PlasticalObject>(new PlasticalNumber(0m));
+    private Stack<PlasticalObject> EnumerationStack = new Stack<PlasticalObject>(new PlasticalNumber(0m));
     public override bool AsBool() => EnumerationStack.Pop()?.AsBool() ?? false;
     public override decimal AsNumber() => EnumerationStack.Pop()?.AsNumber() ?? 0m;
     public override char AsChar() => EnumerationStack.Pop()?.AsChar() ?? (char)0;

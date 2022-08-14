@@ -86,6 +86,7 @@ internal class Parser
 
             case TokenType.String:
             case TokenType.Number:
+            case TokenType.Boolean:
                 {
                     ParseSimpleCommand();
                 }
