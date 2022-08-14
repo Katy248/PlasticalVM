@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using VirtualMachine;
-
-namespace FPL;
+﻿namespace FPL;
 public class FPL
 {
+    protected FPL() {}
     public static string GetVMCode(string sourseCode)
     {
-        var tokens = Lexer.GetTokens(sourseCode);
-        using (StreamWriter sw = new StreamWriter("TokensList.txt")) 
-            foreach (var t in tokens) sw.WriteLine(t);
-        return new Parser(tokens).Parse();
+        var tokens = Lexer.GetTokens(sourseCode, Tokens, Comment);
+        var vmCode = Parser.GetVMCode(tokens);
+        return vmCode;
     }
-    public static Dictionary<string, TokenType> Tokens = new Dictionary<string, TokenType>()
+    public static readonly Dictionary<string, TokenType> Tokens = new Dictionary<string, TokenType>()
     {
         {@"^[\[][^\[\]]*[\]]", TokenType.VMCommand },
         {@"^[\(]", TokenType.OpenBlockBracket },
@@ -28,4 +22,8 @@ public class FPL
         {@"^[^\s\)\(\:\?\|\[\]\~]+", TokenType.Function },
         {@"^[^\s]+", TokenType.UnknownToken},
     };
+    /// <summary>
+    /// Regex to find commentaries in souse code.
+    /// </summary>
+    public static readonly string Comment = @"({#)([^}]*)(#})|([#][^\n]*[\n])";
 }

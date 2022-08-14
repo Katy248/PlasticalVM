@@ -9,6 +9,9 @@ internal class Token
     public override string ToString() => 
         Type.ToString() + ":\t\t" + $"\" {Text} \"";
 }
+/// <summary>
+/// Types of token.
+/// </summary>
 public enum TokenType
 {
     VMCommand,

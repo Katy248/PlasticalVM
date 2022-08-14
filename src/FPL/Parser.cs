@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace FPL;
 internal class Parser
 {
+    public static string GetVMCode(IEnumerable<Token> sourseTokens) => new Parser(sourseTokens).Parse();
     protected int currentTokenIndex = 0;
     protected Token currentToken => tokens[currentTokenIndex];
     protected List<Token> tokens;
@@ -20,21 +21,13 @@ internal class Parser
     public string Parse()
     {
         #region First of all
+
         currentTokenIndex = 0;
         bracketCount = 0;
         blocks.Clear();
 
         #endregion
-        /*foreach (var lib in librariesTokens)
-        {
-            string library = lib.Text.Remove(0, 1);
-            if (File.Exists(library))
-            {
-                using (StreamReader sr = new StreamReader(library))
-                    tokens.AddRange(Lexer.GetTokens(sr.ReadToEnd()));
 
-            }
-        }*/
         CommandBlock baseBlock = new();
         new Function(Names.GetName(), baseBlock);
         blocks.Push(baseBlock);
@@ -145,12 +138,9 @@ internal class Parser
     }
     void ParseLibraryAddition()
     {
-        string libName = currentToken.Text.Remove(0, 1);
+        string libName = currentToken.Text.Remove(0, 1); // Remove "~"
         if (File.Exists(libName))
-        {
-            var tokens = Lexer.GetTokens(File.ReadAllText(libName));
-            LibrariesParsedCode.Add(new Parser(tokens).Parse());
-        }
+            LibrariesParsedCode.Add(FPL.GetVMCode(File.ReadAllText(libName)));
     }
     protected bool Match(TokenType type)
     {
