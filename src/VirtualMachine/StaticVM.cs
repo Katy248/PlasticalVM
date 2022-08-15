@@ -99,6 +99,7 @@ public partial class VM
     protected static void EndAction(string? args)
     {
         processedVM._codeLines.Clear();
+        processedVM._currentLine = int.MaxValue;
     }
     protected static void CallIfAction(string args)
     {
