@@ -1,6 +1,0 @@
-﻿0 [write] 1 [write]
-fbnch
-fbnch :(
-	[dup 1] [dup 1] [add] [write]
-	55 [less] ? ([pop] fbnch)
-)
