@@ -17,45 +17,33 @@ public partial class VM
     private readonly System.Collections.Generic.Stack<int> CallStack;
     private List<string> _codeLines { get; set; }
     private int _currentLine;
-
+    private Dictionary<string, int> _labels = new Dictionary<string, int>();
     public void Run(string code)
     {
-        
-        //code = Regex.Replace(code, @"({#)([^}]*)(#})|([#][^\n]*[\n])", "");
         _codeLines = code.Trim().Split('\n').ToList();
-        for (_currentLine = 0; _currentLine < _codeLines.Count; _currentLine++)
-            if (_codeLines[_currentLine].Trim() != "")
-            {
-                string command = _codeLines[_currentLine].Trim().Split(' ').First();
-                string args = _codeLines[_currentLine].Trim().Replace(command, "").Trim();
-                if (VMCommands.TryGetValue(command, out Action<string>? action))
-                {
-                    action(args);
-                    if (command == End) return;
-                }
-                else
-                {
 
-                }
-            }
+        for (_currentLine = 0; _currentLine < _codeLines.Count; _currentLine++)
+        {
+            Span<string> words = _codeLines[_currentLine].Trim().Split(' ');
+            if (words.Length == 2 && words[0] == VM.Label)
+                _labels.Add(words[1], _currentLine);
+        }
+        for (_currentLine = 0; _currentLine < _codeLines.Count; _currentLine++)
+        {
+            if (_codeLines[_currentLine].Trim() != "") continue;
+
+            string command = _codeLines[_currentLine].Trim().Split(' ').First();
+            string args = _codeLines[_currentLine].Trim().Replace(command, "").Trim();
+            if (VMCommands.TryGetValue(command, out Action<string>? action))
+                action(args);
+            else {}
+        }
     }
     protected static void GoToLabel(string label)
     {
-        var labelLine = processedVM._codeLines
-            .Select((text, index) => (text, index))
-            .FirstOrDefault(line =>
-            {
-                string[] ln = line.text.Trim().Split(' ');
-                return ln.First() == Label & ln.Last() == label;
-            });
-        if (labelLine != default)
-        {
-            processedVM.CallStack.Push(processedVM._currentLine);
-            processedVM._currentLine = labelLine.index;
-        }
+        if(processedVM._labels.TryGetValue(label, out int linePose))
+            processedVM._currentLine = linePose;
         else
-        {
             processedVM.DataStack.Push(LabelDoesNotExist);
-        }
     }
 }
