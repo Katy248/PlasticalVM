@@ -38,9 +38,6 @@
     <None Update="test\TestFPLCode.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestVMCode.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="test\ydtd.fpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
