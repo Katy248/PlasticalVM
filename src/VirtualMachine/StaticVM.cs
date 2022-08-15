@@ -103,7 +103,7 @@ public partial class VM
     protected static void CallIfAction(string args)
     {
         string[] labels = args.Split(' ');
-        if (processedVM.DataStack.Pop()?.AsBool() ?? false)
+        if (processedVM.DataStack.Pop()?.AsBool?? false)
         {
             GoToLabel(labels.First());
         }
@@ -155,8 +155,8 @@ public partial class VM
     {
         processedVM.DataStack.Push(
             new PlasticalNumber(
-                (processedVM.DataStack.Pop()?.AsNumber() ?? 0m) +
-                (processedVM.DataStack.Pop()?.AsNumber() ?? 0m)
+                (processedVM.DataStack.Pop()?.AsNumber?? 0m) +
+                (processedVM.DataStack.Pop()?.AsNumber?? 0m)
                 )
             );
     }
@@ -164,8 +164,8 @@ public partial class VM
     {
         processedVM.DataStack.Push(
             new PlasticalNumber(
-                (processedVM.DataStack.Pop()?.AsNumber() ?? 0m) -
-                (processedVM.DataStack.Pop()?.AsNumber() ?? 0m)
+                (processedVM.DataStack.Pop()?.AsNumber?? 0m) -
+                (processedVM.DataStack.Pop()?.AsNumber?? 0m)
                 )
             );
     }
@@ -173,58 +173,58 @@ public partial class VM
     {
         processedVM.DataStack.Push(
             new PlasticalNumber(
-                (processedVM.DataStack.Pop()?.AsNumber() ?? 0m) *
-                (processedVM.DataStack.Pop()?.AsNumber() ?? 0m)
+                (processedVM.DataStack.Pop()?.AsNumber?? 0m) *
+                (processedVM.DataStack.Pop()?.AsNumber?? 0m)
                 )
             );
     }
     protected static void DivAction(string arg)
     {
-        var num2 = (processedVM.DataStack.Pop()?.AsNumber() ?? 0m);
-        var num1 = (processedVM.DataStack.Pop()?.AsNumber() ?? 0m);
+        var num2 = (processedVM.DataStack.Pop()?.AsNumber?? 0m);
+        var num1 = (processedVM.DataStack.Pop()?.AsNumber?? 0m);
 
         processedVM.DataStack.Push(
             num2 != 0 ? new PlasticalNumber(num1 / num2) : DivisionByZero);
     }
     protected static void MoreAction(string arg)
     {
-        var num2 = (processedVM.DataStack.Peek()?.AsNumber() ?? 0m);
-        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber() ?? 0m);
+        var num2 = (processedVM.DataStack.Peek()?.AsNumber?? 0m);
+        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber?? 0m);
 
         processedVM.DataStack.Push(new PlasticalBoolean(num1 > num2));
     }
     protected static void LessAction(string arg)
     {
-        var num2 = (processedVM.DataStack.Peek()?.AsNumber() ?? 0m);
-        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber() ?? 0m);
+        var num2 = (processedVM.DataStack.Peek()?.AsNumber?? 0m);
+        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber?? 0m);
 
         processedVM.DataStack.Push(new PlasticalBoolean(num1 < num2));
     }
     protected static void EqualAction(string arg)
     {
-        var num2 = (processedVM.DataStack.Peek()?.AsNumber() ?? 0m);
-        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber() ?? 0m);
+        var num2 = (processedVM.DataStack.Peek()?.AsNumber?? 0m);
+        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber?? 0m);
 
         processedVM.DataStack.Push(new PlasticalBoolean(num1 == num2));
     }
     protected static void NonEqualAction(string arg)
     {
-        var num2 = (processedVM.DataStack.Peek()?.AsNumber() ?? 0m);
-        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber() ?? 0m);
+        var num2 = (processedVM.DataStack.Peek()?.AsNumber?? 0m);
+        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber?? 0m);
 
         processedVM.DataStack.Push(new PlasticalBoolean(num1 != num2));
     }
     protected static void MoreOrEqualAction(string arg)
     {
-        var num2 = (processedVM.DataStack.Peek()?.AsNumber() ?? 0m);
-        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber() ?? 0m);
+        var num2 = (processedVM.DataStack.Peek()?.AsNumber?? 0m);
+        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber?? 0m);
 
         processedVM.DataStack.Push(new PlasticalBoolean(num1 >= num2));
     }
     protected static void LessOrEqualAction(string arg)
     {
-        var num2 = (processedVM.DataStack.Peek()?.AsNumber() ?? 0m);
-        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber() ?? 0m);
+        var num2 = (processedVM.DataStack.Peek()?.AsNumber?? 0m);
+        var num1 = (processedVM.DataStack.Peek(1)?.AsNumber?? 0m);
 
         processedVM.DataStack.Push(new PlasticalBoolean(num1 <= num2));
     }
@@ -237,7 +237,7 @@ public partial class VM
         var obj = processedVM.DataStack.Pop();
         if (obj != null)
         {
-            processedVM.DataStack.Push(new PlasticalNumber(obj.AsNumber()));
+            processedVM.DataStack.Push(new PlasticalNumber(obj.AsNumber));
         }
         else
         {
@@ -249,7 +249,7 @@ public partial class VM
         var obj = processedVM.DataStack.Pop();
         if (obj != null)
         {
-            processedVM.DataStack.Push(new PlasticalBoolean(obj.AsBool()));
+            processedVM.DataStack.Push(new PlasticalBoolean(obj.AsBool));
         }
         else
         {
@@ -261,7 +261,7 @@ public partial class VM
         var obj = processedVM.DataStack.Pop();
         if (obj != null)
         {
-            processedVM.DataStack.Push(new PlasticalChar(obj.AsChar()));
+            processedVM.DataStack.Push(new PlasticalChar(obj.AsChar));
         }
         else
         {
