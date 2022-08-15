@@ -30,13 +30,14 @@ public partial class VM
         }
         for (_currentLine = 0; _currentLine < _codeLines.Count; _currentLine++)
         {
-            if (_codeLines[_currentLine].Trim() != "") continue;
+            if (_codeLines[_currentLine].Trim() == "") continue;
 
             string command = _codeLines[_currentLine].Trim().Split(' ').First();
             string args = _codeLines[_currentLine].Trim().Replace(command, "").Trim();
             if (VMCommands.TryGetValue(command, out Action<string>? action))
                 action(args);
             else {}
+            if (command == VM.End) return;
         }
     }
     protected static void GoToLabel(string label)
