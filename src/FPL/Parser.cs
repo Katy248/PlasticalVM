@@ -148,6 +148,7 @@ internal class Parser
     }
     protected bool MatchNext(TokenType type)
     {
+        if (currentTokenIndex == tokens.Count - 1) return false;
         return Match(tokens[currentTokenIndex + 1], type);
     }
     protected bool Match(Token checkedToken, TokenType type) => checkedToken.Type == type;
