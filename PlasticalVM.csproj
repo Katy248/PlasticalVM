@@ -15,7 +15,24 @@
 
 
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+
+
+    <StartupObject>PlasticalVM.Program</StartupObject>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="src\obj\**" />
+    <EmbeddedResource Remove="src\obj\**" />
+    <None Remove="src\obj\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Update="test\TestFPLCode.txt">
