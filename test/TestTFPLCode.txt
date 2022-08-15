@@ -1,0 +1,7 @@
+﻿load ydtd.fpl
+	fbnch
+
+	fbnch def {
+		dup1 dup1 + print
+		55 < if {pop fbnch}
+	}

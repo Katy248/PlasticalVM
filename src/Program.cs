@@ -17,7 +17,7 @@ internal class Program
     static void Main(string[] args)
     {
         Console.Title = "Plastical";
-        var code = FPL.FPL.GetVMCode(File.ReadAllText("test/TestFPLCode.txt"));
+        var code = FPL.FPL.GetVMCode(File.ReadAllText("test/TestTFPLCode.txt"));
         VM.Run(code);
         Console.ReadKey();
     }
