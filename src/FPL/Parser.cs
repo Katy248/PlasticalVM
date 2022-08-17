@@ -14,14 +14,14 @@ internal class Parser
     Stack<CommandBlock> blocks = new();
     protected int bracketCount = 0;
     protected List<string> LibrariesParsedCode = new();
-    VMStructuresList StructuresList = new(new Function(Names.GetName(), new CommandBlock()));
+    VMStructuresList StructuresList = new (new Function());
     public Parser(IEnumerable<Token> sourseTokens)
     {
         tokens = sourseTokens.ToList();
     }
     public string Parse()
     {
-        blocks.Push(StructuresList.BaseFunction.FunctionCommandBlock);
+        blocks.Push(StructuresList.BaseFunction.CommandBlock);
 
         ParseUnknown();
 
@@ -102,25 +102,25 @@ internal class Parser
     void ParseFuncDeclare()
     {
         StructuresList.AddFunction(new Function(currentToken.Text, new CommandBlock()));
-        blocks.Push(StructuresList.Functions.Last().FunctionCommandBlock);
+        blocks.Push(StructuresList.GetLastFunction.CommandBlock);
         NextUntilMatch(TokenType.OpenBlockBracket);
     }
     void ParseIfConstruction()
     {
-        var ifFunc = new Function(Names.GetName(), new CommandBlock());
+        var ifFunc = new Function();
         StructuresList.AddCommand(new IfElseStructure(ifFunc));
         StructuresList.AddFunction(ifFunc);
 
-        blocks.Push(ifFunc.FunctionCommandBlock);
+        blocks.Push(ifFunc.CommandBlock);
 
         NextUntilMatch(TokenType.OpenBlockBracket);
     }
     void ParseElseConstruction()
     {
-        if (StructuresList.Functions.Last().FunctionCommandBlock.GetLastCommand() is IfElseStructure ifElse)
+        if (StructuresList.GetLastFunction.CommandBlock.GetLastCommand() is IfElseStructure ifElse)
         {
             StructuresList.AddFunction(ifElse.ElseFunction);
-            blocks.Push(ifElse.ElseFunction.FunctionCommandBlock);
+            blocks.Push(ifElse.ElseFunction.CommandBlock);
             NextUntilMatch(TokenType.OpenBlockBracket);
         }
         else
