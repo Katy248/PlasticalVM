@@ -18,7 +18,7 @@ internal class Command: IVMCodeStorer
                 VMCode = $"{VM.Push} {token.Text}";
                 break;
             case TokenType.String:
-                VMCode = $"{VM.Push} {token.Text.Replace('\'', ' ')}";
+                VMCode = $"{VM.Push} {token.Text.Remove(token.Text.Length - 1, 1).Remove(0, 1)}";
                 break;
             case TokenType.Boolean:
                 VMCode = $"{VM.Push} {token.Text.Trim()}";
