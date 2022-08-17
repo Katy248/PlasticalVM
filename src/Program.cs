@@ -12,13 +12,12 @@ namespace PlasticalVM;
  *  UpdateVmFile + vm sourse file (optimize sourse file)
  */
 
-internal class Program
+internal class Plastical
 {
     static void Main(string[] args)
     {
         Console.Title = "Plastical";
-        var code = FPL.FPL.GetVMCode(File.ReadAllText("test/TestFPLCode.txt"));
-        VM.Run(code);
+        tests.LangTest.RunTest();
         Console.ReadKey();
     }
 }

@@ -14,23 +14,14 @@ internal class Parser
     Stack<CommandBlock> blocks = new();
     protected int bracketCount = 0;
     protected List<string> LibrariesParsedCode = new();
+    VMStructuresList StructuresList = new(new Function(Names.GetName(), new CommandBlock()));
     public Parser(IEnumerable<Token> sourseTokens)
     {
         tokens = sourseTokens.ToList();
     }
     public string Parse()
     {
-        #region First of all
-
-        currentTokenIndex = 0;
-        bracketCount = 0;
-        blocks.Clear();
-
-        #endregion
-
-        CommandBlock baseBlock = new();
-        new Function(Names.GetName(), baseBlock);
-        blocks.Push(baseBlock);
+        blocks.Push(StructuresList.BaseFunction.FunctionCommandBlock);
 
         ParseUnknown();
 
@@ -39,7 +30,7 @@ internal class Parser
             Next();
             ParseUnknown();
         }
-        string vmCode = Function.GetFunctionsVmCode();
+        string vmCode = StructuresList.GetVMCode();
         foreach (var lib in LibrariesParsedCode)
         {
             vmCode += lib;
@@ -68,7 +59,7 @@ internal class Parser
                 break;
             case TokenType.IfKeyWord:
                 {
-                    ParseIfElseConstruction();
+                    ParseIfConstruction();
                 }
                 break;
             case TokenType.ElseKeyWord:
@@ -101,38 +92,40 @@ internal class Parser
     }
     void ParseVMCommand()
     {
-        string vmCommand = currentToken.Text.Replace('[', ' ').Replace(']', ' ');
-        blocks.Peek().Add(new Command(vmCommand));
+        string vmCommand = currentToken.Text.Replace('[', ' ').Replace(']', ' ').Trim();
+        StructuresList.AddCommand(new Command(vmCommand));
     }
     void ParseSimpleCommand()
     {
-        blocks.Peek().Add(new Command(currentToken));
+        StructuresList.AddCommand(new Command(currentToken));
     }
     void ParseFuncDeclare()
     {
-        var funcBlock = new CommandBlock();
-        new Function(currentToken.Text, funcBlock);
-        blocks.Push(funcBlock);
+        StructuresList.AddFunction(new Function(currentToken.Text, new CommandBlock()));
+        blocks.Push(StructuresList.Functions.Last().FunctionCommandBlock);
         NextUntilMatch(TokenType.OpenBlockBracket);
     }
-    void ParseIfElseConstruction()
+    void ParseIfConstruction()
     {
-        //var ifblock = new CodeBlock();
+        var ifFunc = new Function(Names.GetName(), new CommandBlock());
+        StructuresList.AddCommand(new IfElseStructure(ifFunc));
+        StructuresList.AddFunction(ifFunc);
 
-        blocks.Peek().Add(new IfElse());
-        blocks.Push(IfElse.GetLastIf());
+        blocks.Push(ifFunc.FunctionCommandBlock);
 
         NextUntilMatch(TokenType.OpenBlockBracket);
     }
     void ParseElseConstruction()
     {
-        if (!IfElse.GetLastElse().isExist)
+        if (StructuresList.Functions.Last().FunctionCommandBlock.GetLastCommand() is IfElseStructure ifElse)
         {
-            blocks.Push(IfElse.GetLastElse().elseBlock);
+            StructuresList.AddFunction(ifElse.ElseFunction);
+            blocks.Push(ifElse.ElseFunction.FunctionCommandBlock);
             NextUntilMatch(TokenType.OpenBlockBracket);
         }
         else
         {
+            NextUntilMatch(TokenType.OpenBlockBracket);
             blocks.Push(new CommandBlock());
         }
     }

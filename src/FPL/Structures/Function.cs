@@ -7,8 +7,7 @@ using VirtualMachine;
 namespace FPL.Structures;
 internal class Function : IVMCodeStorer
 {
-    static List<Function> functions = new();
-    public static string GetFunctionsVmCode()
+    public static string GetFunctionsVmCode(IEnumerable<Function> functions)
     {
         string text = "";
         foreach (var fn in functions)
@@ -17,16 +16,17 @@ internal class Function : IVMCodeStorer
         }
         return text;
     }
-    public Function(string name, CommandBlock block)
+    public Function(string name, CommandBlock block, bool isBaseFunction = false)
     {
         Name = name;
-        FunctionCodeBlock = block;
-        functions.Add(this);
+        FunctionCommandBlock = block;
+        IsBaseFunction = isBaseFunction;
     }
+    public bool IsBaseFunction;
     public string Name { get; set; }
-    public CommandBlock FunctionCodeBlock;
+    public CommandBlock FunctionCommandBlock;
     public string GetVMCode()
     {
-        return $"\nlabel {Name}\n" + FunctionCodeBlock.GetVMCode() + $"{(functions.IndexOf(this) == 0 ? VM.End : VM.Return)}\n";
+        return $"\nlabel {Name}\n" + FunctionCommandBlock.GetVMCode() + $"{(IsBaseFunction ? VM.End : VM.Return)}\n";
     }
 }

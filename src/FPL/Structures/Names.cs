@@ -8,6 +8,6 @@ namespace FPL.Structures;
 public class Names
 {
     private static long lastNameNum = 0;
-    private static long GetNewNameNum => ++lastNameNum;
-    public static string GetName() => $":lb#{GetNewNameNum}:";
+    private static long GetNewNameNum() { lastNameNum++; return lastNameNum; }
+    public static string GetName() => $":lb#{GetNewNameNum()}:";
 }

@@ -20,7 +20,7 @@ public partial class VM
         { Call, CallAction},
         { Return, ReturnAction},
         { End, EndAction},
-        /*{ Read, ReadAction},*/
+        { Read, ReadAction},
         { Write, WriteAction},
         { CallIf, CallIfAction},
         {Add, AddAction },
@@ -99,7 +99,6 @@ public partial class VM
     protected static void EndAction(string? args)
     {
         processedVM._codeLines.Clear();
-        processedVM._currentLine = int.MaxValue;
     }
     protected static void CallIfAction(string args)
     {
@@ -116,38 +115,10 @@ public partial class VM
     protected static void WriteAction(string args)
     {
         Console.WriteLine(processedVM.DataStack.Peek()?.ToString());
-        /*if (args == "tofile")
-        {
-            StreamWriter sw = null;
-            try
-            {
-                sw = new StreamWriter(dataStack.Pop().ToString());
-                sw.Write(dataStack.Peek());
-            }
-            finally
-            {
-                if (sw != null) sw.Close();
-            }
-        }
-        else if (args == "tofile+")
-        {
-            StreamWriter sw = null;
-            try
-            {
-                sw = new StreamWriter(dataStack.Pop().ToString());
-                sw.WriteLine(dataStack.Peek());
-            }
-            finally
-            {
-                if (sw != null) sw.Close();
-            }
-        }
-        else
-        {
-            dataStack.TryPeek(out object result);
-            Console.WriteLine(result);
-        }
-*/
+    }
+    protected static void ReadAction(string args)
+    {
+        //Console.WriteLine(processedVM.DataStack.Peek()?.ToString());
     }
     #endregion
 

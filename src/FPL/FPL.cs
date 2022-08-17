@@ -16,7 +16,7 @@ public class FPL
         {@"^[\?]", TokenType.IfKeyWord },
         {@"^[\;]", TokenType.ElseKeyWord },
         {@"^[:]", TokenType.FunctionDefine },
-        {@"^([\'][^\n\']*[\'])", TokenType.String },
+        {@"^([\'][^\'\n]*[\'])|^([""][^""\n]*[""])", TokenType.String },
         {@"^[\d]+[\.]?[\d]*", TokenType.Number },
         {@"^[\~][^\s]+[\.][^\s]+", TokenType.AddingLibFile},
         {@"^[^\s\)\(\:\?\|\[\]\~]+", TokenType.Function },

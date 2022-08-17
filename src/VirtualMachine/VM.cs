@@ -28,6 +28,9 @@ public partial class VM
             if (words.Length == 2 && words[0] == VM.Label)
                 _labels.Add(words[1], _currentLine);
         }
+
+        GoToLabel(_labels.ToArray().First().Key);
+
         for (_currentLine = 0; _currentLine < _codeLines.Count; _currentLine++)
         {
             if (_codeLines[_currentLine].Trim() == "") continue;
@@ -42,8 +45,11 @@ public partial class VM
     }
     protected static void GoToLabel(string label)
     {
-        if(processedVM._labels.TryGetValue(label, out int linePose))
+        if (processedVM._labels.TryGetValue(label, out int linePose))
+        {
+            processedVM.CallStack.Push(processedVM._currentLine);
             processedVM._currentLine = linePose;
+        }
         else
             processedVM.DataStack.Push(LabelDoesNotExist);
     }
