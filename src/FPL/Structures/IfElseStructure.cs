@@ -22,7 +22,7 @@ internal class IfElseStructure : Command
         get 
         {
             if (ifFunction == null)
-                ifFunction = new Function(Names.GetName(), new CommandBlock());
+                ifFunction = new Function();
             return ifFunction; 
         } 
     }
@@ -31,7 +31,7 @@ internal class IfElseStructure : Command
         get
         {
             if (elseFunction == null)
-                elseFunction = new Function(Names.GetName(), new CommandBlock());
+                elseFunction = new Function();
             return elseFunction;
         }
     }
