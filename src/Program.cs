@@ -12,7 +12,7 @@ namespace PlasticalVM;
  *  UpdateVmFile + vm sourse file (optimize sourse file)
  */
 
-internal class Plastical
+internal class Program
 {
     static void Main(string[] args)
     {
