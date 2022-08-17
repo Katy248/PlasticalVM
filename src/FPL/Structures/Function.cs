@@ -7,26 +7,32 @@ using VirtualMachine;
 namespace FPL.Structures;
 internal class Function : IVMCodeStorer
 {
+    #region Constructors
+
+    public Function(string name, CommandBlock block, bool isBaseFunction = false)
+    {
+        this.Name = name;
+        this.CommandBlock = block;
+        this.IsBaseFunction = isBaseFunction;
+    }
+
+    public Function(string name, bool isBaseFunction = false) : this(name, new CommandBlock(), isBaseFunction) {}
+
+    public Function(bool isBaseFunction = false) : this(Names.GetName(), new CommandBlock(), isBaseFunction) { }
+
+    #endregion
     public static string GetFunctionsVmCode(IEnumerable<Function> functions)
     {
         string text = "";
-        foreach (var fn in functions)
-        {
-            text+=fn.GetVMCode();
-        }
+        foreach (var fn in functions) text+=fn.GetVMCode();
         return text;
     }
-    public Function(string name, CommandBlock block, bool isBaseFunction = false)
-    {
-        Name = name;
-        FunctionCommandBlock = block;
-        IsBaseFunction = isBaseFunction;
-    }
-    public bool IsBaseFunction;
-    public string Name { get; set; }
-    public CommandBlock FunctionCommandBlock;
+    
+    public bool IsBaseFunction { get; init; }
+    public string Name { get; init; }
+    public CommandBlock CommandBlock { get; init; }
     public string GetVMCode()
     {
-        return $"\nlabel {Name}\n" + FunctionCommandBlock.GetVMCode() + $"{(IsBaseFunction ? VM.End : VM.Return)}\n";
+        return $"\nlabel {Name}\n" + CommandBlock.GetVMCode() + $"{(IsBaseFunction ? VM.End : VM.Return)}\n";
     }
 }
