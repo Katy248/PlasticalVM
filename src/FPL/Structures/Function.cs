@@ -28,7 +28,7 @@ internal class Function : IVMCodeStorer
         return text;
     }
     
-    public bool IsBaseFunction { get; init; }
+    public bool IsBaseFunction { get; set; }
     public string Name { get; init; }
     public CommandBlock CommandBlock { get; init; }
     public string GetVMCode()
