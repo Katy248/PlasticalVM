@@ -18,6 +18,7 @@ internal class VMStructuresList : IVMCodeStorer
 
     private List<Function> Functions = new();
     public void AddFunction(Function function) => Functions.Add(function);
-    public void AddCommand(Command command) => Functions.Last().CommandBlock.Add(command);
+    public Function GetLastFunction => Functions.Last();
+    public void AddCommand(Command command) => GetLastFunction.CommandBlock.Add(command);
     public string GetVMCode() => Function.GetFunctionsVmCode(Functions);
 }
