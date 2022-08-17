@@ -3,7 +3,7 @@
 internal class CommandBlock : IVMCodeStorer
 {
     #region Constructors
-    public CommandBlock() : this(Names.GetName()) {}
+    public CommandBlock() {}
     public CommandBlock(string name)
     {
         Name = name;
@@ -17,6 +17,10 @@ internal class CommandBlock : IVMCodeStorer
     {
         if (command == null) return;
         commands.Add(command);
+    }
+    public Command GetLastCommand()
+    {
+        return commands.Last();
     }
     public string GetVMCode()
     {
