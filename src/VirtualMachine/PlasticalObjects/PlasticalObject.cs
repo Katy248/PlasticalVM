@@ -10,7 +10,12 @@ public abstract class PlasticalObject
     public override bool Equals(object? obj)
     {
         if (obj == null) return false;
+        if (this.GetHashCode != obj.GetHashCode) return false;
         if (!(obj is PlasticalObject)) return false;
         return ((PlasticalObject)obj).AsNumber == this.AsNumber;
+    }
+    public override int GetHashCode()
+    {
+        return (int)AsChar * (int)AsChar * (int)AsChar;
     }
 }
