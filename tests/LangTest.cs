@@ -1,13 +1,11 @@
 ﻿using VirtualMachine;
-using FPL.Structures;
-using FPL;
 
 namespace tests;
 internal class LangTest
 {
     public static void RunTest()
     {
-        var code = FPL.FPL.GetVMCode(File.ReadAllText("test/TestFPLCode.txt"));
+        var code = FPL.FPL.GetVMCode(File.ReadAllText("tests/plastical-hello-world.fpl"));
         VM.Run(code);
     }
 }

@@ -35,6 +35,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="tests\plastical-hello-world.fpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tests\TestFPLCode.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="test\TestFPLCode.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
