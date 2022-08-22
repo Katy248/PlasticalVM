@@ -1,8 +1,9 @@
-﻿namespace FPL;
-public class FPL
+﻿using LanguageInterfaces;
+
+namespace FPL;
+public class FunctionalPlasticalLanguage : ILanguageTranslator
 {
-    protected FPL() {}
-    public static string GetVMCode(string sourseCode)
+    public string GetVMCode(string sourseCode)
     {
         var tokens = Lexer.GetTokens(sourseCode, Tokens, Comment);
         var vmCode = Parser.GetVMCode(tokens);

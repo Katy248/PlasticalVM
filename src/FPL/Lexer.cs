@@ -19,7 +19,7 @@ internal class Lexer
         return code = Regex.Replace(code, commentRegex, "").Trim();
     }
     /// <summary>
-    /// Splits code into tokens using <see cref="FPL.Tokens"/>
+    /// Splits code into tokens using <see cref="FunctionalPlasticalLanguage.Tokens"/>
     /// </summary>
     /// <param name="sourseCode">Sourse code.</param>
     /// <param name="tokensRegexes"></param>
