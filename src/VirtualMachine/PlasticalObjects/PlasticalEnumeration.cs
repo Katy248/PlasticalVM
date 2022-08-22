@@ -37,4 +37,5 @@ public class PlasticalEnumeration : PlasticalObject
         else
             return enumObj.EnumerationStack.SequenceEqual(this.EnumerationStack);
     }
+    public override int GetHashCode() => base.GetHashCode();
 }
