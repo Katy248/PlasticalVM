@@ -4,12 +4,12 @@ namespace VirtualMachine;
 public partial class VM
 {
     #region Constructors
-    private VM(int stackCapacity)
+    private VM(int stackCapacity, string code)
     {
         DataStack = new VirtualMachine.Stack<PlasticalObject>(ZeroObject, stackCapacity);
         CallStack = new(stackCapacity);
         _currentLine = 0;
-
+        _codeLines = code.Trim().Split('\n').ToList();
     }
     #endregion
 
@@ -18,9 +18,9 @@ public partial class VM
     private List<string> _codeLines { get; set; }
     private int _currentLine;
     private Dictionary<string, int> _labels = new Dictionary<string, int>();
-    public void Run(string code)
+    public void Run()
     {
-        _codeLines = code.Trim().Split('\n').ToList();
+        
 
         for (_currentLine = 0; _currentLine < _codeLines.Count; _currentLine++)
         {

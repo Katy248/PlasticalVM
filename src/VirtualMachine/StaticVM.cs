@@ -3,14 +3,18 @@
 namespace VirtualMachine;
 public partial class VM
 {
+    static VM()
+    {
+        processedVM = new VM(0,"");
+    }
     public static void Run(string sourseCode, int stackCapacity = 10000)
     {
-        processedVM = new VM(stackCapacity);
-        processedVM.Run(sourseCode);
+        processedVM = new VM(stackCapacity, sourseCode);
+        processedVM.Run();
     }
     public static readonly PlasticalObject ZeroObject = EmptyStack;
 
-    private static VM processedVM;
+    private static VM processedVM { get; set; }
 
     public static readonly Dictionary<string, Action<string>> VMCommands = new Dictionary<string, Action<string>>()
     {
