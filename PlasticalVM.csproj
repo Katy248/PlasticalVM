@@ -50,6 +50,7 @@
     <None Update="test\ydtd.fpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
