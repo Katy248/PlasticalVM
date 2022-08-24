@@ -1,4 +1,6 @@
 TestVMCode.txt
 **/bin/*
+**bin/
 **/obj/*
+**/obj/
 /.vscode/*
