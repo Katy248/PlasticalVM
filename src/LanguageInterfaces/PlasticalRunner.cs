@@ -21,9 +21,27 @@ public class PlasticalRunner
             throw new Exception($"File extension \"{sourseFile.Extension}\" not supported.");
         }
     }
-    public static void Run(string path)
+    public static void Run(string directoryPath)
     {
-        string vmCode = GetVMCode(path);
+        Directory.SetCurrentDirectory(directoryPath);
+        if (File.Exists("--.pproj"))
+        {
+            foreach (var item in File.ReadAllLines("--.pproj"))
+            {
+                string vmCode = GetVMCode(item);
+                VirtualMachine.VM.Run(vmCode);
+            }
+        }
+        else
+        {
+            throw new Exception($"In directory \"{directoryPath}\" project file was not found.");
+        }
+        
+    }
+    public static void RunFile(string filePath)
+    {
+        Directory.SetCurrentDirectory(new FileInfo(filePath).Directory.FullName ?? Directory.GetCurrentDirectory());
+        string vmCode = GetVMCode(filePath);
         VirtualMachine.VM.Run(vmCode);
     }
     public static Dictionary<string, ILanguageTranslator> Translators = new();
