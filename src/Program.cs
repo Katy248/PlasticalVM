@@ -1,24 +1,18 @@
-﻿using FPL;
-using LanguageInterfaces;
+﻿using ConsoleOptions;
+using CommandLine;
 
-/* 
- * Комманды:
- * 
- *  Run + any file path 
- *  MakeVmFile + not vm sourse file path
- *  UpdateVmFile + vm sourse file (optimize sourse file)
- */
 namespace PlasticalVM;
 internal class Program
 {
-    static void Main(string[] args)
+    static int Main(string[] args)
     {
-        Console.Title = "Plastical";
-        PlasticalRunner.Translators.Add(".fpl", new FunctionalPlasticalLanguage());
+        LanguageInterfaces.PlasticalRunner.Translators.Add(".fpl", new FPL.FunctionalPlasticalLanguage());
 
-        //args = new string[] { "tests/plastical-hello-world.fpl","run" };
-
-        new ConsoleParser.Parser().Parse(args);
-        Console.ReadKey();
+        return Parser.Default.ParseArguments<RunOptions, RunFileOptions>(args)
+            .MapResult(
+            (RunOptions opts) => RunOptions.Action(opts),
+            (RunFileOptions opts) => RunFileOptions.Action(opts),
+            err => { return 1; }
+            );
     }
 }
