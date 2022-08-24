@@ -5,17 +5,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <ApplicationVersion>0.0.1</ApplicationVersion>
+    <Version>0.0.2</Version>
     <Authors></Authors>
     <Copyright></Copyright>
     <RootNamespace />
 
-
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-
-
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-
 
     <StartupObject>PlasticalVM.Program</StartupObject>
   </PropertyGroup>
@@ -52,6 +47,10 @@
     </None>
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
   </ItemGroup>
 
 </Project>

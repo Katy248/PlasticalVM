@@ -1,8 +1,0 @@
-﻿~test/ydtd.fpl
-	"Ряд Фибоначчи" write
-	0 write 1 write
-	fbnch
-	fbnch :(
-		dup_1 dup_1 + write
-		55 < ? (pop fbnch)
-	)
