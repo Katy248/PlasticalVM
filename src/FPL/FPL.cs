@@ -16,7 +16,7 @@ public class FunctionalPlasticalLanguage : ILanguageTranslator
         {@"^[\)]", TokenType.CloseBlockBracket },
         {@"^[\?]", TokenType.IfKeyWord },
         {@"^[\;]", TokenType.ElseKeyWord },
-        {@"^[:]", TokenType.FunctionDefine },
+        {@"^(:)|(->)", TokenType.FunctionDefine },
         {@"^([\'][^\'\n]*[\'])|^([""][^""\n]*[""])", TokenType.String },
         {@"^[\d]+[\.]?[\d]*", TokenType.Number },
         {@"^[\~][^\s]+[\.][^\s]+", TokenType.AddingLibFile},
