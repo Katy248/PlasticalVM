@@ -8,11 +8,20 @@ internal class Program
     {
         LanguageInterfaces.PlasticalRunner.Translators.Add(".fpl", new FPL.FunctionalPlasticalLanguage());
 
-        return Parser.Default.ParseArguments<RunOptions, RunFileOptions>(args)
+        try
+        {
+            return Parser.Default.ParseArguments<RunOptions, RunFileOptions>(args)
             .MapResult(
             (RunOptions opts) => RunOptions.Action(opts),
             (RunFileOptions opts) => RunFileOptions.Action(opts),
             err => { return 1; }
             );
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        return -2;
+        
     }
 }
