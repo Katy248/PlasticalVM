@@ -20,8 +20,6 @@ public partial class VM
     private Dictionary<string, int> _labels = new Dictionary<string, int>();
     public void Run()
     {
-        
-
         for (_currentLine = 0; _currentLine < _codeLines.Count; _currentLine++)
         {
             Span<string> words = _codeLines[_currentLine].Trim().Split(' ');
