@@ -5,9 +5,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.0.2</Version>
-    <Authors></Authors>
-    <Copyright></Copyright>
+    <Version>0.0.3</Version>
+    <Authors>Katy248</Authors>
+    <Copyright>Copyright (C) 2022 Katy248</Copyright>
     <RootNamespace />
 
     <PackageReadmeFile>readme.md</PackageReadmeFile>
@@ -29,25 +29,6 @@
     <None Remove="src\obj\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="tests\plastical-hello-world.fpl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="tests\TestFPLCode.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="test\TestFPLCode.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestVMCode.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="test\ydtd.fpl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-    <None Include="readme.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
