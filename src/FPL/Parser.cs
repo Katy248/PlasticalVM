@@ -133,7 +133,7 @@ internal class Parser
     {
         string libName = currentToken.Text.Remove(0, 1); // Remove "~"
         if (File.Exists(libName))
-            LibrariesParsedCode.Add(new FunctionalPlasticalLanguage().GetVMCode(File.ReadAllText(libName)));
+            LibrariesParsedCode.Add(LanguageInterfaces.PlasticalRunner.GetVMCode(libName));
     }
     protected bool Match(TokenType type)
     {
