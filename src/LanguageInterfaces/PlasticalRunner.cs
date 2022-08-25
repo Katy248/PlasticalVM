@@ -26,11 +26,12 @@ public class PlasticalRunner
         Directory.SetCurrentDirectory(directoryPath);
         if (File.Exists("--.pproj"))
         {
+            string vmCode = "";
             foreach (var item in File.ReadAllLines("--.pproj"))
             {
-                string vmCode = GetVMCode(item);
-                VirtualMachine.VM.Run(vmCode);
+                vmCode += GetVMCode(item);
             }
+            VirtualMachine.VM.Run(vmCode);
         }
         else
         {
