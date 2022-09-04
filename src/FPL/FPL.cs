@@ -12,10 +12,7 @@ public class FunctionalPlasticalLanguage : ILanguageTranslator
     public static readonly Dictionary<string, TokenType> Tokens = new Dictionary<string, TokenType>()
     {
         {@"^[\[][^\[\]]*[\]]", TokenType.VMCommand },
-        {@"^[\(]", TokenType.OpenBlockBracket },
-        {@"^[\)]", TokenType.CloseBlockBracket },
-        {@"^[\?]", TokenType.IfKeyWord },
-        {@"^[\;]", TokenType.ElseKeyWord },
+        {@"^(\?->)", TokenType.IfKeyWord },
         {@"^((:)|(->))", TokenType.FunctionDefine },
         {@"^([\'][^\'\n]*[\'])|^([""][^""\n]*[""])", TokenType.String },
         {@"^[\d]+[\.]?[\d]*", TokenType.Number },
