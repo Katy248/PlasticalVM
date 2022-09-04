@@ -11,7 +11,6 @@ internal class Parser
     protected int currentTokenIndex = 0;
     protected Token currentToken => tokens[currentTokenIndex];
     protected List<Token> tokens;
-    Stack<CommandBlock> blocks = new();
     protected int bracketCount = 0;
     protected List<string> LibrariesParsedCode = new();
     VMStructuresList StructuresList = new (new Function());
@@ -21,13 +20,12 @@ internal class Parser
     }
     public string Parse()
     {
-        blocks.Push(StructuresList.BaseFunction.CommandBlock);
+        //blocks.Push(StructuresList.BaseFunction.CommandBlock);
 
         ParseUnknown();
 
-        while (currentTokenIndex < tokens.Count - 1)
+        while (Next() != null)
         {
-            Next();
             ParseUnknown();
         }
         string vmCode = StructuresList.GetVMCode();
@@ -42,38 +40,16 @@ internal class Parser
         switch (currentToken.Type)
         {
             case TokenType.VMCommand:
-                {
                     ParseVMCommand();
-                }
                 break;
-            case TokenType.OpenBlockBracket:
-                {
-                    bracketCount++;
-                }
-                break;
-            case TokenType.CloseBlockBracket:
-                {
-                    if (bracketCount > 0) bracketCount--;
-                    else blocks.Pop();
-                }
-                break;
+            
             case TokenType.IfKeyWord:
-                {
                     ParseIfConstruction();
-                }
                 break;
-            case TokenType.ElseKeyWord:
-                {
-                    ParseElseConstruction();
-                }
-                break;
-
             case TokenType.String:
             case TokenType.Number:
             case TokenType.Boolean:
-                {
                     ParseSimpleCommand();
-                }
                 break;
             case TokenType.Function:
                 {
@@ -84,6 +60,9 @@ internal class Parser
             case TokenType.AddingLibFile:
                 ParseLibraryAddition();
                 break;
+            case TokenType.ElseKeyWord:
+            case TokenType.OpenBlockBracket:
+            case TokenType.CloseBlockBracket:
             case TokenType.FunctionDefine:
             case TokenType.UnknownToken:
             default:
@@ -101,33 +80,12 @@ internal class Parser
     }
     void ParseFuncDeclare()
     {
+        StructuresList.CloseFunction();
         StructuresList.AddFunction(new Function(currentToken.Text, new CommandBlock()));
-        blocks.Push(StructuresList.GetLastFunction.CommandBlock);
-        NextUntilMatch(TokenType.OpenBlockBracket);
     }
     void ParseIfConstruction()
     {
-        var ifFunc = new Function();
-        StructuresList.AddCommand(new IfElseStructure(ifFunc));
-        StructuresList.AddFunction(ifFunc);
-
-        blocks.Push(ifFunc.CommandBlock);
-
-        NextUntilMatch(TokenType.OpenBlockBracket);
-    }
-    void ParseElseConstruction()
-    {
-        if (StructuresList.GetLastFunction.CommandBlock.GetLastCommand() is IfElseStructure ifElse)
-        {
-            StructuresList.AddFunction(ifElse.ElseFunction);
-            blocks.Push(ifElse.ElseFunction.CommandBlock);
-            NextUntilMatch(TokenType.OpenBlockBracket);
-        }
-        else
-        {
-            NextUntilMatch(TokenType.OpenBlockBracket);
-            blocks.Push(new CommandBlock());
-        }
+        StructuresList.AddCommand(new IfElseCommand(Next(),Next()));
     }
     void ParseLibraryAddition()
     {
@@ -148,16 +106,13 @@ internal class Parser
     void NextUntilMatch(TokenType type)
     {
         while (!Match(type))
-            Next();
+            if(Next()==null) return;
     }
     protected Token? Next()
     {
+        if (currentTokenIndex == tokens.Count - 1) return null;
         currentTokenIndex++;
-        if (currentTokenIndex != tokens.Count - 1)
-        {
-            return tokens[currentTokenIndex];
-        }
-        return null;
+        return tokens[currentTokenIndex];
         //throw new IndexOutOfRangeException();
     }
 }
