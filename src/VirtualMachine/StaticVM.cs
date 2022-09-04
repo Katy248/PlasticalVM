@@ -41,6 +41,8 @@ public partial class VM
         { AsBool, AsBoolAction },
         {AsChar, AsCharAction},
         {UpReturn, UpReturnAction},
+        {Increment, IncrementAction},
+        {Decrement, DecrementAction},
     };
 
     #region VM Lang Commands
@@ -69,6 +71,8 @@ public partial class VM
     public const string AsBool = "asbool";
     public const string AsChar = "aschar";
     public const string UpReturn = "upreturn";
+    public const string Increment = "inc";
+    public const string Decrement = "dec";
     //end other later
 
     #endregion
@@ -129,7 +133,7 @@ public partial class VM
     }
     protected static void ReadAction(string args)
     {
-        //Console.WriteLine(processedVM.DataStack.Peek()?.ToString());
+        processedVM.DataStack.Push(PlasticalObjectBuilder.GetPlasticalObject(Console.ReadLine() ?? ""));
     }
     #endregion
 
@@ -138,8 +142,8 @@ public partial class VM
     {
         processedVM.DataStack.Push(
             new PlasticalNumber(
-                (processedVM.DataStack.Pop()?.AsNumber?? 0m) +
-                (processedVM.DataStack.Pop()?.AsNumber?? 0m)
+                (processedVM.DataStack.Pop()?.AsNumber ?? 0m) +
+                (processedVM.DataStack.Pop()?.AsNumber ?? 0m)
                 )
             );
     }
@@ -210,6 +214,14 @@ public partial class VM
         var num1 = (processedVM.DataStack.Peek(1)?.AsNumber?? 0m);
 
         processedVM.DataStack.Push(new PlasticalBoolean(num1 <= num2));
+    }
+    protected static void IncrementAction(string arg)
+    {
+        processedVM.DataStack.Push(new PlasticalNumber((processedVM.DataStack.Pop()?.AsNumber ?? 0m) + 1));
+    }
+    protected static void DecrementAction(string arg)
+    {
+        processedVM.DataStack.Push(new PlasticalNumber((processedVM.DataStack.Pop()?.AsNumber ?? 0m) - 1));
     }
     #endregion
 
