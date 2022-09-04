@@ -9,7 +9,7 @@ public partial class VM
         DataStack = new VirtualMachine.Stack<PlasticalObject>(ZeroObject, stackCapacity);
         CallStack = new(stackCapacity);
         _currentLine = 0;
-        _codeLines = code.Trim().Split('\n').ToList();
+        _codeLines = code.Trim().Split('\n').Where(_ => _ != "").ToList();
     }
     #endregion
 

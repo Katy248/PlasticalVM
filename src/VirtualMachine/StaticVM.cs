@@ -40,6 +40,7 @@ public partial class VM
         { AsNum, AsNumAction },
         { AsBool, AsBoolAction },
         {AsChar, AsCharAction},
+        {UpReturn, UpReturnAction},
     };
 
     #region VM Lang Commands
@@ -67,6 +68,7 @@ public partial class VM
     public const string AsNum = "asnum";
     public const string AsBool = "asbool";
     public const string AsChar = "aschar";
+    public const string UpReturn = "upreturn";
     //end other later
 
     #endregion
@@ -89,7 +91,7 @@ public partial class VM
     {
         GoToLabel(args);
     }
-    protected static void ReturnAction(string args)
+    protected static void ReturnAction(string? args = default)
     {
         if (processedVM.CallStack.Count > 0)
         {
@@ -100,6 +102,11 @@ public partial class VM
             EndAction(default);
         }
     }
+    protected static void UpReturnAction(string args)
+    {
+        ReturnAction();
+        ReturnAction();
+    }
     protected static void EndAction(string? args)
     {
         processedVM._codeLines.Clear();
@@ -107,11 +114,11 @@ public partial class VM
     protected static void CallIfAction(string args)
     {
         string[] labels = args.Split(' ');
-        if (processedVM.DataStack.Pop()?.AsBool?? false)
+        if (processedVM.DataStack.Pop()?.AsBool ?? false)
         {
             GoToLabel(labels.First());
         }
-        else if (labels.Length > 2)
+        else if (labels.Length >= 2)
         {
             GoToLabel(labels.Last());
         }
