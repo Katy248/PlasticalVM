@@ -1,10 +1,8 @@
-Plastical VM
-===
+# Plastical VM
 
 > *Make it run or die trying* 
 
-Hello world 
----
+### Hello world 
 
 ```f#
 ~ydtd.fpl
