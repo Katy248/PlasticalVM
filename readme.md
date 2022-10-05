@@ -1,8 +1,8 @@
 # Plastical VM
 
-> *Make it run or die trying* 
-
 Stack-based virtual machine with dynamic typing.
+
+> *Make it run or die trying* 
 
 ### Hello world 
 
