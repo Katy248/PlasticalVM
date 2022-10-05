@@ -2,6 +2,8 @@
 
 > *Make it run or die trying* 
 
+Stack-based virtual machine with dynamic typing.
+
 ### Hello world 
 
 ```f#
