@@ -4,3 +4,4 @@ TestVMCode.txt
 **/obj/*
 **/obj/
 /.vscode/*
+/.vs/*
